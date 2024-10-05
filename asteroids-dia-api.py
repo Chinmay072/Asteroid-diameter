@@ -1,13 +1,13 @@
-from flask import Flask, request, jsonify
 import numpy as np
-import tensorflow as tf
 import pandas as pd
+import tensorflow as tf
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
 # Load the saved model
-model = tf.keras.models.load_model(r"C:\Life Projects\nasa space app challenge\asteroids-diameter\modell.h5")
-
+model = tf.keras.models.load_model(r"modell.h5")
+port = int(os.environ.get("PORT", 40000))
 def predict_diameter(input_dict):
     # Create a DataFrame from the input dictionary
     df = pd.DataFrame([input_dict])
@@ -63,4 +63,4 @@ def predict():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True,port=port)
